@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billar App</title>
+
+    <script>
+      function disableIE() {
+        if (document.all) {
+          return false
+        }
+      }
+      function disableNS(e) {
+        if (document.layers || (document.getElementById && !document.all)) {
+          if (e.which == 2 || e.which == 3) {
+            return false
+          }
+        }
+      }
+      if (document.layers) {
+        document.captureEvents(Event.MOUSEDOWN)
+        document.onmousedown = disableNS
+      } else {
+        document.onmouseup = disableNS
+        document.oncontextmenu = disableIE
+      }
+      document.oncontextmenu = new Function("return false")
+
+      window.addEventListener("beforeunload", (evento) => {
+        if (true) {
+          evento.preventDefault()
+          evento.returnValue = ""
+          return ""
+        }
+      })
+
+      Session.HashTag = "#"
+
+      function nobackbutton() {
+        window.location.hash = "no-back-button"
+        window.location.hash = "Again-No-back-button" //chrome
+        window.onhashchange = function () {
+          window.location.hash = "no-back-button"
+        }
+      }
+    </script>
+  </head>
+  <body onload="nobackbutton();">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
